@@ -4,13 +4,10 @@ import java.nio.charset.Charset
 
 object Native2Ascii {
 
-  def native2ascii(native: CharSequence): CharSequence = {
-    val sss = native.toString.map {
-      case c if isAscii(c) => c.toString
-      case c => toUnicode(c)
-    }.mkString
-    sss
-  }
+  def native2ascii(native: CharSequence): CharSequence = native.toString.map {
+    case c if isAscii(c) => c.toString
+    case c => toUnicode(c)
+  }.mkString
 
   def ascii2native(ascii: CharSequence): CharSequence = {
     val Array(head, tail@_*) = ascii.toString.split( """\\u""")
@@ -22,13 +19,8 @@ object Native2Ascii {
     }.mkString
   }
 
+  private def isAscii(char: Char): Boolean = Charset.forName("US-ASCII").newEncoder().canEncode(char.toString)
 
-  def isAscii(char: Char): Boolean = {
-    Charset.forName("US-ASCII").newEncoder().canEncode(char.toString)
-  }
-
-  private def toUnicode(char: Char): String = {
-    "\\u" + Integer.toHexString(char.toInt | 0x10000).substring(1)
-  }
+  private def toUnicode(char: Char): String = "\\u" + Integer.toHexString(char.toInt | 0x10000).substring(1)
 
 }

@@ -15,7 +15,7 @@ class Native2AsciiSpec extends FunSuite with Matchers with PropertyChecks {
   )
 
   implicit val nonAsciiCharArbitrary: Arbitrary[NonAsciiChar] = Arbitrary(
-    Arbitrary.arbitrary[Char].filter(c => !isAscii(c)).map(NonAsciiChar)
+    Arbitrary.arbitrary[Char].filter(c => c.toInt < 32 || c.toInt >= 128).map(NonAsciiChar)
   )
 
   test("native2ascii should convert ascii & non-ascii chars correctly") {
