@@ -11,7 +11,7 @@ object Native2Ascii extends App {
 
   def ascii2native(ascii: CharSequence): CharSequence = {
     // '\\\\' is not unescaped by Scala since we use multiline string """"""
-    // and is will be unescaped by regex, to a normal string '\\'
+    // and will be unescaped by regex, to a normal string '\\'
     ascii.toString.split( """\\\\""").map { s =>
       val Array(head, tail@_*) = s.split( """\\u""")
       head + tail.flatMap {
