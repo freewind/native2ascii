@@ -17,11 +17,13 @@ object Native2Ascii extends App {
       head + tail.flatMap {
         case str if str.length >= 4 =>
           val (u, normal) = str.splitAt(4)
-          Seq(Integer.parseInt(u, 16).toChar.toString, normal)
+          Seq(unescapeUnicodeChar(u), normal)
         case str => Seq(str)
       }.mkString
     }.mkString( """\\""")
   }
+
+  private def unescapeUnicodeChar(u: String): String = Integer.parseInt(u, 16).toChar.toString
 
   private def isAscii(char: Char): Boolean = Charset.forName("US-ASCII").newEncoder().canEncode(char.toString)
 
