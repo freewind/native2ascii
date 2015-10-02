@@ -16,8 +16,8 @@ object Native2Ascii extends App {
       val Array(head, tail@_*) = s.split( """\\u""")
       head + tail.flatMap {
         case str if str.length >= 4 =>
-          val (u, normal) = str.splitAt(4)
-          Seq(unescapeUnicodeChar(u), normal)
+          val (unicode, asciiChars) = str.splitAt(4)
+          Seq(unescapeUnicodeChar(unicode), asciiChars)
         case str => Seq(str)
       }.mkString
     }.mkString( """\\""")
