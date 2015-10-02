@@ -64,6 +64,9 @@ class Native2AsciiSpec extends FunSuite with Matchers with PropertyChecks {
   test("special case with escaped \\") {
     native2ascii("\\\\u1234") shouldBe "\\\\u1234"
     ascii2native("\\\\u1234") shouldBe "\\\\u1234"
+
+    native2ascii("\\\\\\u1234") shouldBe "\\\\\\u1234"
+    ascii2native("\\\\\\u1234") shouldBe "\\\\ሴ"
   }
 
 }
