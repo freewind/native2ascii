@@ -48,7 +48,7 @@ class Native2AsciiSpec extends FunSuite with Matchers with PropertyChecks {
     }
   }
 
-  test("Non-iso8859_1 string should be converted") {
+  test("Non-Ascii string should be converted") {
     forAll { char: NonAsciiChar =>
       val str = char.char.toString
       native2ascii(str) shouldNot be(str)
@@ -61,5 +61,9 @@ class Native2AsciiSpec extends FunSuite with Matchers with PropertyChecks {
     }
   }
 
+  test("special case with escaped \\") {
+    native2ascii("\\\\u1234") shouldBe "\\\\u1234"
+    ascii2native("\\\\u1234") shouldBe "\\\\u1234"
+  }
 
 }
